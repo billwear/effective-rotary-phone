@@ -1,8 +1,6 @@
 # erp
-erp = effective rotary phone
-
-**what's it do?**
-calls up various pieces of useful information, as from a planner
+erp = effective rotary phone; 
+**calls up** various pieces of useful information, as from a planner; note the pun.
 
 **where's it at?**
 erp version 0.1, copyright (c) 2016 by billwear
