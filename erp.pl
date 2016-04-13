@@ -9,16 +9,17 @@ Getopt::Long::Configure qw(gnu_getopt);
 use Encode;
 
 # what are the global variables?
-our $targetDates = "today"; 
+our $designator  = "none"; 
 our $matchingTag = "*";      
 our $phonebook   = ".phonebook";
 our $verboseFlag = 0;
 our $helpFlag    = 0;
 our $usageMsg    = 0;
+our $continOK    = 0;
 
 # what's the usage message?
 $usageMsg = 
-	  "erp 0.1 - Copyright (C) 2016, Bill Wear\n"
+	  "erp 0.12 - Copyright (C) 2016, Bill Wear\n"
    . "   [e]ffective [r]otary [p]hone - consults '.phonebook' for stored info\n"
 	. "   erp is licensed under the MIT License, with no warranty.\n\n"
 	. "   -d designator show items of type <designator> (see below)\n"
@@ -48,11 +49,19 @@ $usageMsg =
    . "   Nweekend  Nth weekend of every month; defaults to last if N is nonsensical.\n\n";
   
 
-# subs - listed above to squelch prototype complaints
+# subs - listed above main code to squelch prototype complaints
+
+# process a line that isn't name, note, todo, or continuation
+sub dateLine( $ )
+{
+	my $line = shift;
+}
+
+# process command line arguments
 sub doCmdLineArgs()
 {
 	GetOptions(
-		'd=s' => \$targetDates, # one date or a range of dates
+		'd=s' => \$designator,  # one date or a range of dates
 		't=s' => \$matchingTag, # filter lines by a string
 		'f=s' => \$phonebook,   # instead of ~/.phonebook
 		'v'   => \$verboseFlag, # verbose mode
@@ -60,11 +69,71 @@ sub doCmdLineArgs()
 	) or die $usageMsg;
 
 	if($verboseFlag) {
-		print "target dates = $targetDates\n";
+		print "target dates = $designator\n";
 		print "regex        = $matchingTag\n";
 		print "phonebook    = $phonebook\n";
 		print "verbose      = $verboseFlag\n";
 		print "help         = $helpFlag\n";
+	}
+}
+
+# process a contact line
+sub nameLine( $ )
+{
+	# reset the continuation flag
+	$continOK = 0;
+
+	# is this my line?
+	if( $designator =~ /name/ ) {
+	
+		# mark the designator for continuation lines
+		$continOK = 1;
+
+		# retrieve the line
+		my $line = shift;
+
+		# for now, just print the line
+		print $line;
+	}
+}
+
+# process a note line
+sub noteLine( $ )
+{
+	# reset the continuation flag
+	$continOK = 0;
+
+	# is this my line?
+	if( $designator =~ /note/ ) {
+
+		# mark the designator for continuation lines
+		$continOK = 1;
+
+		# retrieve the line
+		my $line = shift;
+
+		# for now, just print the line
+		print $line;
+	}
+}
+
+# process a todo line
+sub todoLine( $ )
+{
+	# reset the continuation flag
+	$continOK = 0;
+
+	# is this my line?
+	if( $designator =~ /todo/ ) {
+
+		# mark the designator for continuation lines
+		$continOK = 1;
+
+		# retrieve the line
+		my $line = shift;
+
+		# for now, just print the line
+		print $line;
 	}
 }
 
@@ -84,8 +153,36 @@ open my $fh, "<", $phonebook
 
 # for every line in the phonebook...
 while( my $line = <$fh> ) {
-	print $line;
 
+	# is this a comment?
+	if( $line !~ /\t/ ) {
+		next;
+	}
+
+	# is this a contact line?
+	if( $line =~ /^name/ ) {
+		nameLine( $line );
+	}
+
+	# is this a note line?
+	elsif( $line =~ /^note/ ) {
+		noteLine( $line );
+	}
+
+	# is this a todo line?
+	elsif( $line =~ /^todo/ ) {
+		todoLine( $line );
+	}
+
+	# is this a continuation line?
+	elsif( $line =~ /^\t/ && $continOK == 1 ) {
+		print $line;
+	}
+
+	# okay, either a date or garbage
+	else {
+		dateLine( $line );
+	}
 }
 
 # close the phone book

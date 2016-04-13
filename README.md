@@ -44,10 +44,11 @@ erp 0.11 - Copyright (C) 2016, Bill Wear
 <table><tr>
 <th>Version</th><th>date</th><th>what changed?</th>
 </tr><tr>
-<td>0.1</td><td>20160405</td><td>screens & captures command line options<br>
-(gotta start somewhere, right?)</td>
+<td>0.1</td><td>20160405</td><td>screens & captures command line options (gotta start somewhere, right?)</td>
 </tr><tr>
 <td>0.11</td><td>20160413</td><td>prints usage; reads phonebook file & prints it out</td>
+</tr><tr>
+<td>0.12</td><td>20160413</td><td>processes name, note, & todo designators correctly, including continuation lines</td>
 </tr>
 </table>
 

@@ -1,3 +1,14 @@
-line one
-line two
-line three
+name	clark kent
+	344 clinton street, apt 3-d
+	metropolis, sw 88888
+	(555) 123-4567
+	(but he's never home!)
+todo	make a grocery list
+	and get more tomatoes
+note	oh, boy, what a wednesday!
+name	bruce wayne
+	28 wayne place
+	gotham, se 77777
+	(555) 987-6543
+	note: always in the cellar
+
