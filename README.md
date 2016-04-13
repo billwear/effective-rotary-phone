@@ -1,5 +1,5 @@
 # erp
-
+<pre>
 erp 0.11 - Copyright (C) 2016, Bill Wear
    [e]ffective [r]otary [p]hone - consults '.phonebook' for stored info
    erp is licensed under the MIT License, with no warranty.
@@ -38,6 +38,7 @@ erp 0.11 - Copyright (C) 2016, Bill Wear
       weekend   every saturday and sunday.
 
       Nweekend  Nth weekend of every month; defaults to last if N is nonsensical.
+</pre>
 
 **version history**
 <table><tr>
@@ -45,7 +46,7 @@ erp 0.11 - Copyright (C) 2016, Bill Wear
 </tr><tr>
 <td>0.1</td><td>20160405</td><td>screens & captures command line options<br>
 (gotta start somewhere, right?)</td>
-<td>0.11</td><td>20160413</td><td>prints usage; reads phonebook file & prints it out<br>
+<td>0.11</td><td>20160413</td><td>prints usage; reads phonebook file & prints it out</td>
 </tr>
 </table>
 
