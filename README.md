@@ -46,6 +46,7 @@ erp 0.11 - Copyright (C) 2016, Bill Wear
 </tr><tr>
 <td>0.1</td><td>20160405</td><td>screens & captures command line options<br>
 (gotta start somewhere, right?)</td>
+</tr><tr>
 <td>0.11</td><td>20160413</td><td>prints usage; reads phonebook file & prints it out</td>
 </tr>
 </table>
