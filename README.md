@@ -49,6 +49,8 @@ erp 0.11 - Copyright (C) 2016, Bill Wear
 <td>0.11</td><td>20160413</td><td>prints usage; reads phonebook file & prints it out</td>
 </tr><tr>
 <td>0.12</td><td>20160413</td><td>processes name, note, & todo designators correctly, including continuation lines</td>
+</tr><tr>
+<td>0.13</td><td style="font-weight:bold;color:white;background-color:darkgray;">PLANNED<br>20160414</td><td>date input working; today's date default (no option) output</td>
 </tr>
 </table>
 
