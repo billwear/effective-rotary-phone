@@ -4,9 +4,9 @@ erp 0.13 - Copyright (C) 2016, Bill Wear
    [e]ffective [r]otary [p]hone - consults '.phonebook' for stored info
    erp is licensed under the MIT License, with no warranty.
 
-   -d designator show items of type <designator> (see below)
-   -t tag        show only items containing <tag>
-   -f phonebook  load <phonebook> instead of ~/.phonebook
+   -d designator show items of type [designator] (see below)
+   -t tag        show only items containing [tag]
+   -f phonebook  load [phonebook] instead of ~/.phonebook
    -v            verbose output
    -h            print this usage message and exit
 
@@ -14,7 +14,7 @@ erp 0.13 - Copyright (C) 2016, Bill Wear
       designator\tinformation
       \tcontinuation of last designator
 
-   where <designator> is one of the following:
+   where [designator] is one of the following:
       name   someone's contact information
       [date] a date in one of the formats described below
       note   a note to keep & call up later
