@@ -72,5 +72,17 @@ erp 0.11 - Copyright (C) 2016, Bill Wear
 		<td>date input working; today's date default (no option) output</td>
 		<td>contin lines are making it through to the date processor(?)</td>
 	</tr>
+	<tr>
+		<td>0.14</td>
+		<td>PLANNED</td>
+		<td>wider range of specific date formats</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>0.15</td>
+		<td>PLANNED</td>
+		<td>partial date formats for wider range of recurrence </td>
+		<td></td>
+	</tr>
 </table>
 
