@@ -11,4 +11,18 @@ name	bruce wayne
 	gotham, se 77777
 	(555) 987-6543
 	note: always in the cellar
+20160414	yyyymmdd
+mon	dayname (monday)
+wednesday	dayname (wed)
+7mon	seventh monday (== last monday)
+3 tue	third tuesday
+3 saturday apr	third saturday in april
+3sat october	third saturday in october
+weekday	go to work
+weekend	sleep late
+2weekend	sleep later
+3 weekend	sleep even later
+thu	thursday thing
+2thu	second thursday
+2 thu apr	second thursday in april
 

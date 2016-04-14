@@ -1,6 +1,6 @@
 # erp
 <pre>
-erp 0.11 - Copyright (C) 2016, Bill Wear
+erp 0.13 - Copyright (C) 2016, Bill Wear
    [e]ffective [r]otary [p]hone - consults '.phonebook' for stored info
    erp is licensed under the MIT License, with no warranty.
 
@@ -28,16 +28,16 @@ erp 0.11 - Copyright (C) 2016, Bill Wear
       mon       name of any day; only looks at first three letters of the day
 
       Nmon      Nth day of every month (eg, Nth monday); only looks at first
-                three letters of the day; nonsense numbers match last such day.
+                three letters of the day; nonsense numbers (10) won't match.
 
       Nmon oct  Nth day of given month; month can be string or number, only matches
-                first three letters of a string; nonsense month = every month.
+                first three letters of a string; nonsense month won't match.
 
       weekday   every monday through friday; holidays not considered, so ymmv.
 
       weekend   every saturday and sunday.
 
-      Nweekend  Nth weekend of every month; defaults to last if N is nonsensical.
+      Nweekend  Nth weekend of every month; nonsense numbers won't match.
 </pre>
 
 **version history**
@@ -68,7 +68,7 @@ erp 0.11 - Copyright (C) 2016, Bill Wear
 	</tr>
 	<tr>
 		<td>0.13</td>
-		<td>PLANNED<br>20160414</td>
+		<td>20160414</td>
 		<td>date input working; today's date default (no option) output</td>
 		<td>contin lines are making it through to the date processor(?)</td>
 	</tr>
