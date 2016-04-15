@@ -1,43 +1,58 @@
 # erp
 <pre>
-erp 0.13 - Copyright (C) 2016, Bill Wear
-   [e]ffective [r]otary [p]hone - consults '.phonebook' for stored info
+erp 0.14 - Copyright (C) 2016, Bill Wear
+   [e]ffective [r]otary [p]hone - calls up data from structured todo.txt file
    erp is licensed under the MIT License, with no warranty.
 
-   -d designator show items of type [designator] (see below)
-   -t tag        show only items containing [tag]
-   -f phonebook  load [phonebook] instead of ~/.phonebook
+   -p project    show items matching +project
+   -c context    show items matching @context
+   -f todofile   load [todofile] instead of ~/todo.txt
    -v            verbose output
    -h            print this usage message and exit
 
-   phonebook structure:
-      designator\tinformation
-      \tcontinuation of last designator
+   todo.txt structure:
+      (P) yyyy-mm-dd task @context +project due:yyyy-mm-dd t:yyyy-mm-dd
 
-   where [designator] is one of the following:
-      name   someone's contact information
-      [date] a date in one of the formats described below
-      note   a note to keep & call up later
-      todo   a to-do item
+   the following designators get special processing from erp:
 
-   date formats:
-      yyyymmdd  a specific date; substituting dashes for a digit has the
-                effect of ignoring that part of the date (allowing repeats);
-                for example, 0000mmdd = annual; 000000dd = ddth day of each month.
+      due:...   the item prints only if today's date matches the due date,
+                e.g., due:2006-04-16 prints only on april 16, 2006.
 
-      mon       name of any day; only looks at first three letters of the day
+      t:....    (threshold date) the item prints from threshold date forward,
+                e.g., t:2006-05-17 prints from may 17, 2006 onward.
 
-      Nmon      Nth day of every month (eg, Nth monday); only looks at first
-                three letters of the day; nonsense numbers (10) won't match.
+      due: t:   if both are present, the item prints from the threshold date
+                until the due date has passed.
 
-      Nmon oct  Nth day of given month; month can be string or number, only matches
-                first three letters of a string; nonsense month won't match.
+		+dow      (a day of the week) the item prints if dow matches the current
+                day of the week, e.g., +thu prints every thursday.
 
-      weekday   every monday through friday; holidays not considered, so ymmv.
+      +Ndow     (nth day of the week) the item prints only on that particular day
+                each month, e.g., +3sat prints on 3rd saturday of each month.
 
-      weekend   every saturday and sunday.
+      +Ndowmon  (nth day of a particular month each year) the item prints only on
+                the Nth occurence of that day of the week in the stated month, 
+                e.g., 3satoct prints only on the third saturday in october.
 
-      Nweekend  Nth weekend of every month; nonsense numbers won't match.
+      +weekday  (the word "weekday") the item prints on monday thru friday;
+                erp is not aware of weekday holidays, so ymmv.
+
+      +weekend  (the word "weekend") the item prints on saturday and sunday;
+                the nth weekend function in previous versions has been deprecated.
+
+      +0000mmdd an annual event; prints every year on this calendar date.
+
+      +000000dd a monthly event; prints every month on this calendar day.
+
+      +warnN    (the word "less" followed by a number) warning days; if any 
+                recognizable dates are found in the line, erp will print the line
+                for N days preceding the earliest date referenced.
+
+      +nagN     (the word "nag" followed by a number) nag-after days: erp will
+                continue to print the item for N days after the latest due date
+                given in the line.
+
+
 </pre>
 
 **version history**
@@ -75,13 +90,7 @@ erp 0.13 - Copyright (C) 2016, Bill Wear
 	<tr>
 		<td>0.14</td>
 		<td>PLANNED</td>
-		<td>wider range of specific date formats</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>0.15</td>
-		<td>PLANNED</td>
-		<td>partial date formats for wider range of recurrence </td>
+		<td>convert erp to be compatible with todo.txt files (pre-existing mobile app)</td>
 		<td></td>
 	</tr>
 </table>
