@@ -4,55 +4,72 @@ erp 0.14 - Copyright (C) 2016, Bill Wear
    [e]ffective [r]otary [p]hone - calls up data from structured todo.txt file
    erp is licensed under the MIT License, with no warranty.
 
-   -p project    show items matching +project
-   -c context    show items matching @context
-   -f todofile   load [todofile] instead of ~/todo.txt
-   -v            verbose output
-   -h            print this usage message and exit
+	command line options:
 
-   todo.txt structure:
-      (P) yyyy-mm-dd task @context +project due:yyyy-mm-dd t:yyyy-mm-dd
+		-d designator 	show items of type [designator] (see below)
 
-   the following designators get special processing from erp:
+   	-t tag        	show only items containing [tag]
+   	
+		-f phonebook  	load [phonebook] instead of ~/.phonebook
 
-      due:...   the item prints only if today's date matches the due date,
-                e.g., due:2006-04-16 prints only on april 16, 2006.
+		-t todofile		print output to [todofile] in a format compatible with
+ 							todo.txt apps using the due: and t: (threshold) notations
 
-      t:....    (threshold date) the item prints from threshold date forward,
-                e.g., t:2006-05-17 prints from may 17, 2006 onward.
+   	-v            	verbose output
 
-      due: t:   if both are present, the item prints from the threshold date
-                until the due date has passed.
+   	-h             print this usage message and exit
 
-		+dow      (a day of the week) the item prints if dow matches the current
-                day of the week, e.g., +thu prints every thursday.
+	phonebook structure:
 
-      +Ndow     (nth day of the week) the item prints only on that particular day
-                each month, e.g., +3sat prints on 3rd saturday of each month.
+   	designator\\tinformation
 
-      +Ndowmon  (nth day of a particular month each year) the item prints only on
-                the Nth occurence of that day of the week in the stated month, 
-                e.g., 3satoct prints only on the third saturday in october.
+   	\\tcontinuation of last designator
 
-      +weekday  (the word "weekday") the item prints on monday thru friday;
-                erp is not aware of weekday holidays, so ymmv.
+   where [designator] is one of the following:
+   
+		name   someone's contact information
+		[date] a date in one of the formats described below
+   	note   a note to keep & call up later
+   	todo   a to-do item
 
-      +weekend  (the word "weekend") the item prints on saturday and sunday;
-                the nth weekend function in previous versions has been deprecated.
+	date formats:
 
-      +0000mmdd an annual event; prints every year on this calendar date.
+   	yyyymmdd	a specific date; substituting dashes for a digit has the
+   				effect of ignoring that part of the date (allowing repeats);
+   				for example, 0000mmdd = annual; 000000dd = ddth day of each month;
+					00000000 matches every day of the year.
 
-      +000000dd a monthly event; prints every month on this calendar day.
+   	mon     	name of any day; only looks at first three letters of the day.
 
-      +warnN    (the word "less" followed by a number) warning days; if any 
-                recognizable dates are found in the line, erp will print the line
-                for N days preceding the earliest date referenced.
+   	Nmon     Nth day of every month (eg, Nth monday); only looks at first
+   				three letters of the day; nonsense numbers (10) won't match.
 
-      +nagN     (the word "nag" followed by a number) nag-after days: erp will
-                continue to print the item for N days after the latest due date
-                given in the line.
+   	Nmon oct Nth day of given month; month can be string or number, only matches
+   				first three letters of a string; nonsense month won't match.
 
+   	weekday	every monday through friday; holidays not considered, so ymmv.
 
+   	weekend 	every saturday and sunday.
+
+   	Nweekend Nth weekend of every month; nonsense numbers won't match.
+
+   todo.txt output structure:
+
+		the todo.txt output uses the +project, due: and t: meta-elements to encode
+		erp items. [name] and [note] items are concatenated into one line (if there
+		are continuation lines) and marked with [+name] or [+note] respectively.
+		[todo] items are simply transferred to the todo.txt file with no changes. 
+		Any todo.txt information in the line is treated as plain text and passed on;
+		for example, if an erp line has [+cleangarage] in it, that will be passed to
+		the todo.txt file as is, and presumably recognized as a project by the todo app.
+
+		Items which imply a future date (such as "monday") are added to the todo.txt
+		file for the next occurence of that date, with the threshold and due date set
+		to the relevant day. Items which recur (such as "weekday" or "daily") are added 
+		to the todo.txt file in the same manner, but repeated for seven days forward. 
+		A warning notification (e.g., "warn5") moves the threshold date back that many
+		days; the "nag" designator is not reproduced in the todo.txt file.
+		
 </pre>
 
 **version history**
