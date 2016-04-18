@@ -112,9 +112,9 @@ erp 0.14 - Copyright (C) 2016, Bill Wear
       <td colspan="2">** read long usage statement out of README.md in /usr/share/erp<br>
       ** show short usage statement if README.md not found<br>
       ** add processing for "daily" date format<br>
-		4. add processing for annual entries (0000mmdd)<br>
-		5. add processing for all-month entries (000000dd)<br>
-		6. add processing for daily wildcard date (00000000)<br>
+		** add processing for annual entries (0000mmdd)<br>
+		** add processing for all-month entries (000000dd)<br>
+		** add processing for daily wildcard date (00000000)<br>
       7. add todo.txt output format</td>
    </tr>
 </table>

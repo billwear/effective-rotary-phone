@@ -73,9 +73,16 @@ sub dateLine( $ )
 		$date =~ /^([0-9]{4})([0-9]{2})([0-9]{2})/;
 		$year = $1; $month = $2; $day = $3;
 
-		# does it match today?
-		if($day == $cday && $month == $cmonth && $day == $cday) {
+		# parse the wildcards
+		if( $year == 0 && $month == 0 && $day == 0 ) {
 			$printflag = 1;
+		}
+
+		# does it match today?
+		if($day == $cday 
+		  	&& ($month == $cmonth || $month == 0) 
+		  	&& ($year == $cyear || $year == 0)) {
+				$printflag = 1;
 		}
 	}
 
