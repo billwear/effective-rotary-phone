@@ -114,5 +114,11 @@ erp 0.14 - Copyright (C) 2016, Bill Wear
       <td>promoting version 0.14 to version 1.0 (sufficient functionality)</td>
       <td></td>
    </tr>
+   <tr>
+      <td>1.01</td>
+      <td>PLANNED</td>
+      <td>enable rudimentary sync functionality between todo.txt and .phonebook</td>
+      <td></td>
+   </tr>
 </table>
 
