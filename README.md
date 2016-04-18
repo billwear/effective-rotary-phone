@@ -109,7 +109,13 @@ erp 0.14 - Copyright (C) 2016, Bill Wear
    <tr>
       <td>0.14</td>
       <td>PLANNED</td>
-      <td>convert erp to be compatible with todo.txt files (pre-existing mobile app)</td>
+      <td>1. read long usage statement out of README.md in /usr/share/erp<br>
+      <td>2. show short usage statement if README.md not found<br>
+      <td>3. add processing for "daily" date format<br>
+		<td>4. add processing for annual entries (0000mmdd)<br>
+		<td>5. add processing for all-month entries (000000dd)<br>
+		<td>6. add processing for daily wildcard date (00000000)<br>
+      <td>7. add todo.txt output format</td>
       <td></td>
    </tr>
 </table>
