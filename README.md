@@ -110,7 +110,7 @@ erp 0.14 - Copyright (C) 2016, Bill Wear
       <td>0.14</td>
       <td>PLANNED</td>
       <td colspan="2">** read long usage statement out of README.md in /usr/share/erp<br>
-      2. show short usage statement if README.md not found<br>
+      ** show short usage statement if README.md not found<br>
       3. add processing for "daily" date format<br>
 		4. add processing for annual entries (0000mmdd)<br>
 		5. add processing for all-month entries (000000dd)<br>
