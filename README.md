@@ -58,15 +58,10 @@ erp 0.14 - Copyright (C) 2016, Bill Wear
       the todo.txt output uses the +project, due: and t: meta-elements to encode
       erp items. [name] and [note] items are marked with [+name] or [+note], 
 		respectively.  [todo] items are simply passed through with no changes.
+      Dated items are passed through with "due:" and "t:" items set to today.
       Any todo.txt information in the line is treated as plain text and passed on;
       for example, if an erp line has [+cleangarage] in it, that will be passed to
       the todo.txt file as is, and presumably recognized as a project by the todo app.
-
-      Items which imply a future date (such as "monday") are added to the todo.txt
-      file for the next occurence of that date, with the threshold and due date set
-      to the relevant day. Items which recur (such as "weekday" or "daily") are added 
-      to the todo.txt file in the same manner, but repeated for seven days forward. 
-      
 </pre>
 
 **version history**
@@ -103,15 +98,21 @@ erp 0.14 - Copyright (C) 2016, Bill Wear
    </tr>
    <tr>
       <td>0.14</td>
-      <td>PLANNED</td>
-      <td colspan="2">** read long usage statement out of README.md in /usr/share/erp<br>
-      ** show short usage statement if README.md not found<br>
-      ** add processing for "daily" date format<br>
-		** add processing for annual entries (0000mmdd)<br>
-		** add processing for all-month entries (000000dd)<br>
-		** add processing for daily wildcard date (00000000)<br>
-      ** eliminate continuation lines, too long for todo.txt apps<br>
-      8. add todo.txt output format</td>
+      <td>20160418</td>
+      <td colspan="2">-read long usage statement out of README.md in /usr/share/erp<br>
+      -show short usage statement if README.md not found<br>
+      -add processing for "daily" date format<br>
+		-add processing for annual entries (0000mmdd)<br>
+		-add processing for all-month entries (000000dd)<br>
+		-add processing for daily wildcard date (00000000)<br>
+      -eliminate continuation lines, too long for todo.txt apps<br>
+      -add todo.txt output format</td>
+   </tr>
+   <tr>
+      <td>1.00</td>
+      <td>20160418</td>
+      <td>promoting version 0.14 to version 1.0 (sufficient functionality)</td>
+      <td></td>
    </tr>
 </table>
 

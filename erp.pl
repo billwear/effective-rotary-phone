@@ -14,6 +14,7 @@ our $designator  = "none";
 our $matchingTag = "none";      
 our $phonebook   = ".phonebook";
 our $todofile    = "none";
+our $todofp;
 our $verboseFlag = 0;
 our $helpFlag    = 0;
 our $cdow = strftime( "%a", localtime());
@@ -76,7 +77,8 @@ sub dateLine( $ )
 		if($day == $cday 
 		  	&& ($month == $cmonth || $month == 0) 
 		  	&& ($year == $cyear || $year == 0)) {
-				$printflag = 1;
+		
+			$printflag = 1;
 		}
 	}
 
@@ -194,6 +196,13 @@ sub dateLine( $ )
 	# should we print this line?
 	if( $printflag == 1 ) {
 		print "$item\n";
+		# print to todo.txt file, if requested
+		if( $todofile !~ "none" ) {
+			$line =~ /^(.*)\t(.*)\n/;
+			my $desig = $1;
+			my $item = $2;
+			print $todofp "$item due:$cyear-$cmonth-$cday t:$cyear-$cmonth-$cday\n";
+		}
 	}
 
 }
@@ -231,6 +240,14 @@ sub nameLine( $ )
 
 		# for now, just print the line
 		print $line;
+
+		# print to todo.txt file, if requested
+		if( $todofile !~ "none" ) {
+			$line =~ /^(.*)\t(.*)\n/;
+			my $desig = $1;
+			my $item = $2;
+			print $todofp "$item +$desig\n";
+		}
 	}
 }
 
@@ -245,6 +262,14 @@ sub noteLine( $ )
 
 		# for now, just print the line
 		print $line;
+
+		# print to todo.txt file, if requested
+		if( $todofile !~ "none" ) {
+			$line =~ /^(.*)\t(.*)\n/;
+			my $desig = $1;
+			my $item = $2;
+			print $todofp "$item +$desig\n";
+		}
 	}
 }
 
@@ -259,6 +284,14 @@ sub todoLine( $ )
 
 		# for now, just print the line
 		print $line;
+
+		# print to todo.txt file, if requested
+		if( $todofile !~ "none" ) {
+			$line =~ /^(.*)\t(.*)\n/;
+			my $desig = $1;
+			my $item = $2;
+			print $todofp "$item +$desig\n";
+		}
 	}
 }
 
@@ -306,6 +339,13 @@ doCmdLineArgs( );
 
 if( $helpFlag ) {
 	printUsage();
+}
+
+# open the todo.txt file, if requested
+if( $todofile !~ "none" ) {
+	if(!open $todofp, ">>", $todofile) {
+		print "couldn't open todo.txt file!\n";
+	}
 }
 
 # found the phone book?
