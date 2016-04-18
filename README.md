@@ -1,6 +1,6 @@
 # erp
 <pre>
-erp 0.14 - Copyright (C) 2016, Bill Wear
+erp 1.01 - Copyright (C) 2016, Bill Wear
    [e]ffective [r]otary [p]hone - calls up data from structured todo.txt file
    erp is licensed under the MIT License, with no warranty.
 
