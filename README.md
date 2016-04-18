@@ -120,8 +120,9 @@ erp 1.01 - Copyright (C) 2016, Bill Wear
       <td>enable rudimentary feedback capability:<br>
       *write the unix time for all entries as a #nnn...# entry at line end<br>
        (timestamp used for later sync capability)<br>
-      -scan the todo.txt file for entries with no timestamp<br>
-		-append newer items back to the .phonebook, using relevant "+" entries<br>
+      *scan the todo.txt file for entries with no timestamp<br>
+		*append newer items back to the .phonebook 
+      -append newer items using relevant "+" entries<br>
        -- "+note" becomes a note item<br>
        -- "+name" becomes a name item<br>
        -- "+weekday","+daily","+[dow]","+[Ndow]","+[Ndow mon]","+weekend",<br>
