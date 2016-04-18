@@ -117,8 +117,20 @@ erp 0.14 - Copyright (C) 2016, Bill Wear
    <tr>
       <td>1.01</td>
       <td>PLANNED</td>
-      <td>enable rudimentary sync functionality between todo.txt and .phonebook</td>
-      <td></td>
+      <td>enable rudimentary feedback capability:<br>
+      *write the unix time for all entries as a #nnn...# entry at line end
+       (timestamp used for later sync capability)
+      -scan the todo.txt file for entries with no timestamp
+		-append newer items back to the .phonebook, using relevant "+" entries
+       -- "+note" becomes a note item
+       -- "+name" becomes a name item
+       -- "+weekday","+daily","+[dow]","+[Ndow]","+[Ndow mon]","+weekend",
+          "+Nweekend","+yyyymmdd" become date designators in the .phonebook
+       -- "due:" or "t:" dates become date designators, also
+       -- "+todo" becomes a todo item
+       -- entries not marked with one of the above become todo items
+       -- if an item has multiple matches, the first one found is used
+      </td>
    </tr>
 </table>
 
