@@ -25,6 +25,8 @@ erp 0.14 - Copyright (C) 2016, Bill Wear
 
       \\tcontinuation of last designator
 
+      Note that lines without a tab are treated as comments and ignored.
+
    where [designator] is one of the following:
    
       name   someone's contact information
@@ -67,8 +69,6 @@ erp 0.14 - Copyright (C) 2016, Bill Wear
       file for the next occurence of that date, with the threshold and due date set
       to the relevant day. Items which recur (such as "weekday" or "daily") are added 
       to the todo.txt file in the same manner, but repeated for seven days forward. 
-      A warning notification (e.g., "warn5") moves the threshold date back that many
-      days; the "nag" designator is not reproduced in the todo.txt file.
       
 </pre>
 
