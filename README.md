@@ -39,7 +39,9 @@ erp 0.14 - Copyright (C) 2016, Bill Wear
       yyyymmdd a specific date; substituting dashes for a digit has the
                effect of ignoring that part of the date (allowing repeats);
                for example, 0000mmdd = annual; 000000dd = ddth day of each month;
-               00000000 matches every day of the year.
+               00000000 matches every day of the year, but "daily" is easier.
+
+      daily    every day of the year
 
       mon      name of any day; only looks at first three letters of the day.
 
