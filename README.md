@@ -130,7 +130,8 @@ erp 1.01 - Copyright (C) 2016, Bill Wear
        -- "due:" or "t:" dates become date designators, also<br>
        -- "+todo" becomes a todo item<br>
        -- entries not marked with one of the above become todo items<br>
-       -- if an item has multiple matches, the first one found is used
+       -- if an item has multiple matches, the first one matched in the order<br>
+          given above is the one used.
       </td>
    </tr>
 </table>
