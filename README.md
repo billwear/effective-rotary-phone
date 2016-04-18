@@ -1,7 +1,7 @@
 # erp
 <pre>
 erp 1.01 - Copyright (C) 2016, Bill Wear
-   [e]ffective [r]otary [p]hone - calls up data from structured todo.txt file
+   [e]ffective [r]otary [p]hone - calls up data from bsd-calendar-like file
    erp is licensed under the MIT License, with no warranty.
 
    command line options:
