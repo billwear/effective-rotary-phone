@@ -21,11 +21,7 @@ erp 0.14 - Copyright (C) 2016, Bill Wear
 
    phonebook structure:
 
-      designator\\tinformation
-
-      \\tcontinuation of last designator
-
-      Note that lines without a tab are treated as comments and ignored.
+      designator\\tinformation (lines without a tab are ignored)
 
    where [designator] is one of the following:
    
@@ -60,9 +56,8 @@ erp 0.14 - Copyright (C) 2016, Bill Wear
    todo.txt output structure:
 
       the todo.txt output uses the +project, due: and t: meta-elements to encode
-      erp items. [name] and [note] items are concatenated into one line (if there
-      are continuation lines) and marked with [+name] or [+note] respectively.
-      [todo] items are simply transferred to the todo.txt file with no changes. 
+      erp items. [name] and [note] items are marked with [+name] or [+note], 
+		respectively.  [todo] items are simply passed through with no changes.
       Any todo.txt information in the line is treated as plain text and passed on;
       for example, if an erp line has [+cleangarage] in it, that will be passed to
       the todo.txt file as is, and presumably recognized as a project by the todo app.
@@ -115,7 +110,8 @@ erp 0.14 - Copyright (C) 2016, Bill Wear
 		** add processing for annual entries (0000mmdd)<br>
 		** add processing for all-month entries (000000dd)<br>
 		** add processing for daily wildcard date (00000000)<br>
-      7. add todo.txt output format</td>
+      ** eliminate continuation lines, too long for todo.txt apps<br>
+      8. add todo.txt output format</td>
    </tr>
 </table>
 

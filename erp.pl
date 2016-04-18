@@ -11,12 +11,11 @@ use POSIX;
 
 # what are the global variables?
 our $designator  = "none"; 
-our $matchingTag = "*";      
+our $matchingTag = "none";      
 our $phonebook   = ".phonebook";
 our $todofile    = "none";
 our $verboseFlag = 0;
 our $helpFlag    = 0;
-our $continOK    = 0;
 our $cdow = strftime( "%a", localtime());
 our $cmoy = strftime( "%b", localtime());
 our $cday = strftime( "%d", localtime());
@@ -26,7 +25,7 @@ our $ndow = strftime( "%u", localtime());
 
 # subs - listed above main code to squelch prototype complaints
 
-# process a line that isn't name, note, todo, or continuation
+# process a line that isn't name, note, or todo item
 sub dateLine( $ )
 {
 	# don't process if another designator is selected
@@ -47,11 +46,6 @@ sub dateLine( $ )
 
 	# retrieve the line
 	my $line = shift;
-
-	# reject continuation lines (bug)
-	if( $line =~ /^\t/ ) {
-		return;
-	}
 
 	# break the line into parts
 	$line =~ /^(.*)\t(.*)\n/;
@@ -229,15 +223,9 @@ sub doCmdLineArgs()
 # process a contact line
 sub nameLine( $ )
 {
-	# reset the continuation flag
-	$continOK = 0;
-
 	# is this my line?
 	if( $designator =~ /name/ ) {
 	
-		# mark the designator for continuation lines
-		$continOK = 1;
-
 		# retrieve the line
 		my $line = shift;
 
@@ -249,14 +237,8 @@ sub nameLine( $ )
 # process a note line
 sub noteLine( $ )
 {
-	# reset the continuation flag
-	$continOK = 0;
-
 	# is this my line?
 	if( $designator =~ /note/ ) {
-
-		# mark the designator for continuation lines
-		$continOK = 1;
 
 		# retrieve the line
 		my $line = shift;
@@ -269,14 +251,8 @@ sub noteLine( $ )
 # process a todo line
 sub todoLine( $ )
 {
-	# reset the continuation flag
-	$continOK = 0;
-
 	# is this my line?
 	if( $designator =~ /todo/ ) {
-
-		# mark the designator for continuation lines
-		$continOK = 1;
 
 		# retrieve the line
 		my $line = shift;
@@ -357,11 +333,6 @@ while( my $line = <$fh> ) {
 	# is this a todo line?
 	elsif( $line =~ /^todo/ ) {
 		todoLine( $line );
-	}
-
-	# is this a continuation line?
-	elsif( $line =~ /^\t/ && $continOK == 1 ) {
-		print $line;
 	}
 
 	# okay, either a date or garbage
