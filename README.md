@@ -118,17 +118,17 @@ erp 1.01 - Copyright (C) 2016, Bill Wear
       <td>1.01</td>
       <td>PLANNED</td>
       <td>enable rudimentary feedback capability:<br>
-      *write the unix time for all entries as a #nnn...# entry at line end
-       (timestamp used for later sync capability)
-      -scan the todo.txt file for entries with no timestamp
-		-append newer items back to the .phonebook, using relevant "+" entries
-       -- "+note" becomes a note item
-       -- "+name" becomes a name item
-       -- "+weekday","+daily","+[dow]","+[Ndow]","+[Ndow mon]","+weekend",
-          "+Nweekend","+yyyymmdd" become date designators in the .phonebook
-       -- "due:" or "t:" dates become date designators, also
-       -- "+todo" becomes a todo item
-       -- entries not marked with one of the above become todo items
+      *write the unix time for all entries as a #nnn...# entry at line end<br>
+       (timestamp used for later sync capability)<br>
+      -scan the todo.txt file for entries with no timestamp<br>
+		-append newer items back to the .phonebook, using relevant "+" entries<br>
+       -- "+note" becomes a note item<br>
+       -- "+name" becomes a name item<br>
+       -- "+weekday","+daily","+[dow]","+[Ndow]","+[Ndow mon]","+weekend",<br>
+          "+Nweekend","+yyyymmdd" become date designators in the .phonebook<br>
+       -- "due:" or "t:" dates become date designators, also<br>
+       -- "+todo" becomes a todo item<br>
+       -- entries not marked with one of the above become todo items<br>
        -- if an item has multiple matches, the first one found is used
       </td>
    </tr>
