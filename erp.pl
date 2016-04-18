@@ -13,9 +13,9 @@ use POSIX;
 our $designator  = "none"; 
 our $matchingTag = "*";      
 our $phonebook   = ".phonebook";
+our $todofile    = "none";
 our $verboseFlag = 0;
 our $helpFlag    = 0;
-our $usageMsg    = 0;
 our $continOK    = 0;
 our $cdow = strftime( "%a", localtime());
 our $cmoy = strftime( "%b", localtime());
@@ -23,38 +23,6 @@ our $cday = strftime( "%d", localtime());
 our $cmonth = strftime( "%m", localtime());
 our $cyear = strftime( "%Y", localtime());
 our $ndow = strftime( "%u", localtime());
-
-# what's the usage message?
-$usageMsg = 
-	  "erp 0.13 - Copyright (C) 2016, Bill Wear\n"
-   . "   [e]ffective [r]otary [p]hone - consults '.phonebook' for stored info\n"
-	. "   erp is licensed under the MIT License, with no warranty.\n\n"
-	. "   -d designator show items of type <designator> (see below)\n"
-   . "   -t tag        show only items containing <tag>\n"
-   . "   -f phonebook  load <phonebook> instead of ~/.phonebook\n"
-   . "   -v            verbose output\n"
-   . "   -h            print this usage message and exit\n\n"
-	. "phonebook structure:\n"
-   . "   designator\\tinformation\n"
-   . "   \\tcontinuation of last designator\n\n"
-   . "where <designator> is one of the following:\n"
-   . "   name   someone's contact information\n"
-	. "   [date] a date in one of the formats described below\n"
-   . "   note   a note to keep & call up later\n"
-   . "   todo   a to-do item\n\n"
-	. "date formats:\n"
-   . "   yyyymmdd  a specific date; substituting dashes for a digit has the \n"
-   . "             effect of ignoring that part of the date (allowing repeats);\n"
-   . "             for example, 0000mmdd = annual; 000000dd = ddth day of each month.\n\n"
-   . "   mon       name of any day; only looks at first three letters of the day.\n\n"
-   . "   Nmon      Nth day of every month (eg, Nth monday); only looks at first \n"
-   . "             three letters of the day; nonsense numbers (10) won't match.\n\n"
-   . "   Nmon oct  Nth day of given month; month can be string or number, only matches\n"
-   . "             first three letters of a string; nonsense month won't match.\n\n"
-   . "   weekday   every monday through friday; holidays not considered, so ymmv.\n\n"
-   . "   weekend   every saturday and sunday.\n\n"
-   . "   Nweekend  Nth weekend of every month; nonsense numbers won't match.\n\n";
-  
 
 # subs - listed above main code to squelch prototype complaints
 
@@ -92,6 +60,11 @@ sub dateLine( $ )
 
 	# recognize the date, if possible
 	#
+	
+	# is it "daily"?
+	if( $date =~ /daily/ ) {
+		$printflag = 1;
+	}
 	
 	# is it yyyymmdd?
 	if( $date =~ /[0-9]{8}/ ) {
@@ -229,16 +202,18 @@ sub doCmdLineArgs()
 {
 	GetOptions(
 		'd=s' => \$designator,  # one date or a range of dates
-		't=s' => \$matchingTag, # filter lines by a string
+		's=s' => \$matchingTag, # filter lines by a string
 		'f=s' => \$phonebook,   # instead of ~/.phonebook
+		't=s' => \$todofile,    # where to write todo.txt output
 		'v'   => \$verboseFlag, # verbose mode
 		'h'   => \$helpFlag     # print usage and quit
-	) or die $usageMsg;
+	) or printUsage();
 
 	if($verboseFlag) {
 		print "target dates = $designator\n";
 		print "regex        = $matchingTag\n";
 		print "phonebook    = $phonebook\n";
+		print "todofile     = $todofile\n";
 		print "verbose      = $verboseFlag\n";
 		print "help         = $helpFlag\n";
 	}
@@ -304,14 +279,50 @@ sub todoLine( $ )
 	}
 }
 
+# print the usage message
+sub printUsage( )
+{
+	# file pointer
+	my $fp;
+
+	# attempt to open the readme file
+	if(!open $fp, "<", "/usr/share/erp/README.md") {
+		shortUsage();
+	}
+
+	my $pflag = 0;
+
+	# read & print all lines between <pre> and </pre>
+	while(my $line = <$fp>) {
+		if($line =~ /^<pre>/) {
+			$pflag = 1;
+			next;
+		}
+		if($line =~ /^<\/pre>/) {
+			$pflag = 0;
+			next;
+		}
+		if($pflag == 1) {
+			print "$line";
+		}
+	}
+	exit;
+}
+
+# backup usage message if README.md can't be found
+sub shortUsage( )
+{
+	print "erp -d designator -s tag -f phonebook -t todofile -v -h\n";
+	exit;
+}
+
 ### main thread
 
 # are there command line args?
 doCmdLineArgs( );
 
 if( $helpFlag ) {
-	print $usageMsg;
-	exit;
+	printUsage();
 }
 
 # found the phone book?
