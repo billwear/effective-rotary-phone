@@ -8,7 +8,7 @@ erp 0.14 - Copyright (C) 2016, Bill Wear
 
       -d designator  show items of type [designator] (see below)
 
-      -t tag         show only items containing [tag]
+      -s tag         show only items containing [tag]
       
       -f phonebook   load [phonebook] instead of ~/.phonebook
 
