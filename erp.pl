@@ -11,7 +11,7 @@ use POSIX;
 
 # what are the global variables?
 our $designator  = "none"; 
-our $matchingTag = "none";      
+#our $matchingTag = "none";      
 our $phonebook   = ".phonebook";
 our $todofile    = "none";
 our $todofp;
@@ -198,12 +198,12 @@ sub dateLine( $ )
 	if( $printflag == 1 ) {
 		print "$item\n";
 		# print to todo.txt file, if requested
-		if( $todofile !~ "none" ) {
-			$line =~ /^(.*)\t(.*)\n/;
-			my $desig = $1;
-			my $item = $2;
-			print $todofp "$item due:$cyear-$cmonth-$cday t:$cyear-$cmonth-$cday #$epoch#\n";
-		}
+		#if( $todofile !~ "none" ) {
+			#$line =~ /^(.*)\t(.*)\n/;
+			#my $desig = $1;
+			#my $item = $2;
+			#print $todofp "$item due:$cyear-$cmonth-$cday t:$cyear-$cmonth-$cday #$epoch#\n";
+		#}
 	}
 
 }
@@ -213,18 +213,18 @@ sub doCmdLineArgs()
 {
 	GetOptions(
 		'd=s' => \$designator,  # one date or a range of dates
-		's=s' => \$matchingTag, # filter lines by a string
+#		's=s' => \$matchingTag, # filter lines by a string
 		'f=s' => \$phonebook,   # instead of ~/.phonebook
-		't=s' => \$todofile,    # where to write todo.txt output
+		#'t=s' => \$todofile,    # where to write todo.txt output
 		'v'   => \$verboseFlag, # verbose mode
 		'h'   => \$helpFlag     # print usage and quit
 	) or printUsage();
 
 	if($verboseFlag) {
 		print "target dates = $designator\n";
-		print "regex        = $matchingTag\n";
+#		print "regex        = $matchingTag\n";
 		print "phonebook    = $phonebook\n";
-		print "todofile     = $todofile\n";
+		#print "todofile     = $todofile\n";
 		print "verbose      = $verboseFlag\n";
 		print "help         = $helpFlag\n";
 	}
@@ -243,12 +243,12 @@ sub nameLine( $ )
 		print $line;
 
 		# print to todo.txt file, if requested
-		if( $todofile !~ "none" ) {
-			$line =~ /^(.*)\t(.*)\n/;
-			my $desig = $1;
-			my $item = $2;
-			print $todofp "$item +$desig #$epoch#\n";
-		}
+		#if( $todofile !~ "none" ) {
+			#$line =~ /^(.*)\t(.*)\n/;
+			#my $desig = $1;
+			#my $item = $2;
+			#print $todofp "$item +$desig #$epoch#\n";
+		#}
 	}
 }
 
@@ -265,12 +265,12 @@ sub noteLine( $ )
 		print $line;
 
 		# print to todo.txt file, if requested
-		if( $todofile !~ "none" ) {
-			$line =~ /^(.*)\t(.*)\n/;
-			my $desig = $1;
-			my $item = $2;
-			print $todofp "$item +$desig #$epoch#\n";
-		}
+		#if( $todofile !~ "none" ) {
+			#$line =~ /^(.*)\t(.*)\n/;
+			#my $desig = $1;
+			#my $item = $2;
+			#print $todofp "$item +$desig #$epoch#\n";
+		#}
 	}
 }
 
@@ -287,12 +287,12 @@ sub todoLine( $ )
 		print $line;
 
 		# print to todo.txt file, if requested
-		if( $todofile !~ "none" ) {
-			$line =~ /^(.*)\t(.*)\n/;
-			my $desig = $1;
-			my $item = $2;
-			print $todofp "$item +$desig #$epoch#\n";
-		}
+		#if( $todofile !~ "none" ) {
+			#$line =~ /^(.*)\t(.*)\n/;
+			#my $desig = $1;
+			#my $item = $2;
+			#print $todofp "$item +$desig #$epoch#\n";
+		#}
 	}
 }
 
@@ -329,7 +329,7 @@ sub printUsage( )
 # backup usage message if README.md can't be found
 sub shortUsage( )
 {
-	print "erp -d designator -s tag -f phonebook -t todofile -v -h\n";
+	print "erp -d designator -f phonebook -v -h\n";
 	exit;
 }
 
@@ -343,62 +343,62 @@ if( $helpFlag ) {
 }
 
 # open the phonebook to append
-open my $fh, ">>", $phonebook
-	or die "can't open phonebook $phonebook: $!";
+#open my $fh, ">>", $phonebook
+	#or die "can't open phonebook $phonebook: $!";
 
 # open the todo.txt file, if requested
-if( $todofile !~ "none" ) {
+#if( $todofile !~ "none" ) {
 	
 	# read in the todo.txt file, if it exists
-	if(open $todofp, "<", $todofile) {
-		while( my $todoline = <$todofp>) {
+	#if(open $todofp, "<", $todofile) {
+		#while( my $todoline = <$todofp>) {
 
 			# is there a timestamp?
-			if($todoline =~ /\#([0-9]*)\#/) {
-				my $timestamp = $1;
-			}
+			#if($todoline =~ /\#([0-9]*)\#/) {
+				#my $timestamp = $1;
+			#}
 
 			# if no timestamp, this one is a new item
-			else {
-				my $outline = $todoline;
-				my $prefix = "todo";
-				chomp($outline);
-				if($outline =~ /\+note/) {
-					$prefix = "note";
-					$outline =~ s/\+note//g);
-				}
-				elsif($outline =~ /\+name/) {
-					$prefix = "name";
-				}
-				elsif($outline =~ /\+todo/) {
-					$prefix = "todo";
-				}
-				elsif($outline =~ /\+weekday/) {
-					$prefix = "weekday";
-				}
-				elsif($outline =~ /\+weekend/) {
-					$prefix = "weekend";
-				}
-				elsif($outline =~ /\+daily/) {
-					$prefix = "daily";
-				}
-				print $fh "$prefix\t$outline #$epoch#\n";
-			}
-		}
-		close $todofp;
-	}
+			#else {
+				#my $outline = $todoline;
+				#my $prefix = "todo";
+				#chomp($outline);
+				#if($outline =~ /\+note/) {
+					#$prefix = "note";
+					#$outline =~ s/\+note//g);
+				#}
+				#elsif($outline =~ /\+name/) {
+					#$prefix = "name";
+				#}
+				#elsif($outline =~ /\+todo/) {
+					#$prefix = "todo";
+				#}
+				#elsif($outline =~ /\+weekday/) {
+					#$prefix = "weekday";
+				#}
+				#elsif($outline =~ /\+weekend/) {
+					#$prefix = "weekend";
+				#}
+				#elsif($outline =~ /\+daily/) {
+					#$prefix = "daily";
+				#}
+				#print $fh "$prefix\t$outline #$epoch#\n";
+			#}
+		#}
+		#close $todofp;
+	#}
 
 	# re-open the todo file for writing
-	if(!open $todofp, ">", $todofile) {
-		print "couldn't open todo.txt file!\n";
-		$todofile = "none";
-	}
-}
+	#if(!open $todofp, ">", $todofile) {
+		#print "couldn't open todo.txt file!\n";
+		#$todofile = "none";
+	#}
+#}
 
-close $fh;
+#close $fh;
 
 # found the phone book?
-open $fh, "<", $phonebook
+open my $fh, "<", $phonebook
 	or die "can't open phonebook $phonebook: $!";
 
 # for every line in the phonebook...
