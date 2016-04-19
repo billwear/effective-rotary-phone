@@ -65,8 +65,8 @@ erp 1.10 - Copyright (C) 2016, Bill Wear
    <tr>
       <td>1.10</td>
       <td>20160419</td>
-      <td>-removed continuation lines<br>-removed todo.txt conversion<br>
-      <br>+miliary time on dated lines floats to sorted list at top of output</td>
+      <td>-removed continuation lines<br>-removed todo.txt conversion
+      <br>+military time on dated lines floats to sorted list at top of output</td>
       <td>---</td>
    </tr>
 </table>
