@@ -25,8 +25,9 @@ erp 1.10 - Copyright (C) 2016, Bill Wear
       note   a note to keep & call up later
       todo   a to-do item
 
-	The "hh:mm" is an optional time, in military (24-hour) time. All lines which begin
-   with a valid time will be sorted to the top of the output in time order.
+   The "hh:mm" is an optional time, in military (24-hour) time. All dated lines 
+   which begin with a valid time will be sorted to the top of the output in 
+   time order, with an appropriate title bar.
 
    **date formats**
 
@@ -62,38 +63,11 @@ erp 1.10 - Copyright (C) 2016, Bill Wear
       <th>known bugs</th>
    </tr>
    <tr>
-      <td>0.1</td>
-      <td>20160405</td>
-      <td>screens & captures command line options (gotta start somewhere, right?)</td>
+      <td>1.10</td>
+      <td>20160419</td>
+      <td>-removed continuation lines<br>-removed todo.txt conversion<br>
+      <br>+miliary time on dated lines floats to sorted list at top of output</td>
       <td>---</td>
-   </tr>
-   <tr>
-      <td>0.11</td>
-      <td>20160413</td>
-      <td>prints usage; reads phonebook file & prints it out</td>
-      <td>---</td>
-   </tr>
-   <tr>
-      <td>0.12</td>
-      <td>20160413</td>
-      <td>processes name, note, & todo designators correctly, including contin lines</td>
-      <td>---</td>
-   </tr>
-   <tr>
-      <td>0.13</td>
-      <td>20160414</td>
-      <td>date input working; today's date default (no option) output</td>
-      <td>contin lines are making it through to the date processor(?)</td>
-   </tr>
-   <tr>
-      <td>1.00</td>
-      <td>21060418</td>
-      <td>README.md --> /usr/share/erp<br>
-      short usage msg if no README<br>
-      process "daily"<br>
-		process 0000mmdd<br>
-		process 000000dd<br>
-      process 00000000<br>
    </tr>
 </table>
 
