@@ -1,10 +1,10 @@
 # erp
 <pre>
-erp 1.00 - Copyright (C) 2016, Bill Wear
+erp 1.10 - Copyright (C) 2016, Bill Wear
    [e]ffective [r]otary [p]hone - calls up data from structured todo.txt file
    erp is licensed under the MIT License, with no warranty.
 
-   command line options:
+   **command line options**
 
       -d designator  show items of type [designator] (see below)
 
@@ -14,13 +14,9 @@ erp 1.00 - Copyright (C) 2016, Bill Wear
 
       -h             print this usage message and exit
 
-   phonebook structure:
+   **phonebook structure**
 
-      designator\\tinformation
-
-      \\tcontinuation of last designator
-
-      Note that lines without a tab are treated as comments and ignored.
+      designator\\thh:mm information
 
    where [designator] is one of the following:
    
@@ -29,7 +25,10 @@ erp 1.00 - Copyright (C) 2016, Bill Wear
       note   a note to keep & call up later
       todo   a to-do item
 
-   date formats:
+	The "hh:mm" is an optional time, in military (24-hour) time. All lines which begin
+   with a valid time will be sorted to the top of the output in time order.
+
+   **date formats**
 
       yyyymmdd a specific date; substituting dashes for a digit has the
                effect of ignoring that part of the date (allowing repeats);
