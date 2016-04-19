@@ -12,7 +12,7 @@ use File::Slurp;
 
 # what are the global variables?
 our $designator  = "none"; 
-#our $matchingTag = "none";      
+our $agendaflag  = 0;
 our $phonebook   = ".phonebook";
 our $todofile    = "none";
 our $todofp;
@@ -20,13 +20,14 @@ our $verboseFlag = 0;
 our $helpFlag    = 0;
 our @upperlist;
 our @lowerlist;
-our $cdow = strftime( "%a", localtime());
-our $cmoy = strftime( "%b", localtime());
-our $cday = strftime( "%d", localtime());
+our $cdow   = strftime( "%a", localtime());
+our $cmoy   = strftime( "%b", localtime());
+our $cday   = strftime( "%d", localtime());
 our $cmonth = strftime( "%m", localtime());
-our $cyear = strftime( "%Y", localtime());
-our $ndow = strftime( "%u", localtime());
-our $epoch = strftime( "%s", localtime());
+our $cyear  = strftime( "%Y", localtime());
+our $ndow   = strftime( "%u", localtime());
+our $epoch  = strftime( "%s", localtime());
+#our $matchingTag = "none";      
 
 # subs - listed above main code to squelch prototype complaints
 
@@ -427,14 +428,85 @@ foreach my $line (@lines) {
 	}
 }
 
-## print the lists
-#
-# sort and print the upper list
-my @sortedlist = sort @upperlist;
-print "\n--------------- TIMED APPOINTMENTS ---------------\n";
-print @sortedlist;
-print "\n";
+## process and print the lists
 
-# print the lower list
-print @lowerlist;
+my @outputlist;
+
+# walk thru the upper list
+foreach my $line (@upperlist) {
+
+	# arrays reboot on each line
+	my @theatmods;
+	my @theplusmods;
+	my @thepoundmods;
+
+	# - pull out the "@" mods
+	while(1) {
+		$line =~ /(@[^ ]*)/;
+		my $atmod = $1;
+		if(!$atmod) {
+			last;
+		}
+		chomp($atmod);
+		push @theatmods, $atmod;
+		$line =~ s/$atmod//g;
+	}
+
+	if((scalar @theatmods) == 0) {
+		push @theatmods, " ";
+	}
+
+	# - pull out the "+" mods
+	while(1) {
+		$line =~ /\+([^ ]*)/;
+		my $plusmod = $1;
+		if(!$plusmod) {
+			last;
+		}
+		chomp($plusmod);
+		push @theplusmods, "+$plusmod";
+		$line =~ s/\+$plusmod//g;
+	}
+
+	if((scalar @theplusmods) == 0) {
+		push @theplusmods, " ";
+	}
+
+	$line =~ s/\n//g;
+
+	my $rightend = sprintf("%20.20s %20.20s", join(',',@theatmods), join(',',@theplusmods));
+	my $outstring = sprintf("%-35.35s %s\n", $line, $rightend);
+	push @outputlist, $outstring;
+}
+
+	my @sortedlist = sort @outputlist;
+	print @sortedlist;
+
+=cut
+	
+	# shift any modifiers (+,#,@) to the right end of the line
+	my @outputlist;
+	my $outstring;
+		my $line = $_;
+		$line =~ /^([^@#+]*)(.*)$/;
+		my $text = $1;
+		my $mods = $2;
+		$outstring = sprintf("%-40.40s %30s\n", $text, $mods);
+		push @outputlist, $outstring;
+	}
+	
+	# sort and print the upper list
+	my @sortedlist = sort @outputlist;
+	
+	# print the lower list
+	foreach(@lowerlist) {
+		my $line = $_;
+		$line =~ /^([^@#+]*)(.*)$/;
+		my $text = $1;
+		my $mods = $2;
+		$outstring = sprintf("%-40.40s %30s\n", $text, $mods);
+		push @sortedlist, $outstring;
+	}
+	print @sortedlist;
+}
 
