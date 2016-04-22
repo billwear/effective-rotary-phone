@@ -179,14 +179,21 @@ sub agendas($) {
 	# is it dd with no other qualifiers? (0.15)
 
 	if( $printflag == 1 ) {
-		print "$item\n";
+		$item =~ /([^:]*) *([^:]*) *([^\n]*)/;
+		my $task = $1; my $value = $2; my $context = $3;
+      if(!$value) { $value = "all"; }
+      if(!$context) { $context = "anywhere"; }
+		printf("%8.8s | %8.8s | %s\n", $value, $context, $task);
 	}	
 }
 
 sub calorie($) {
 	my $line = shift;
 	$line =~ s/^[A-Za-z0-9\-]* *//g;
-	print $line;
+   $line =~ /([^\:]*): *([^\:]*): *([^\:]*): *([^\:]*): *([^\:]*): *([^\n]*)/;
+   my $date=$1; my $time=$2; my $cal=$4; my $sodium=$5; my $carbs=$6; my $food=$3;
+	printf("%8.8s | %4.4s | cal: %3.3s | sodium: %6.6s | carbs: %3.3s | %s\n", 
+       $date, $time, $cal, $sodium, $carbs, $food);
 }
 
 sub cuisine($) {
@@ -216,7 +223,8 @@ sub grocery($) {
 sub listing($) {
 	my $line = shift;
 	$line =~ s/^[A-Za-z0-9\-]* *//g;
-	print $line;
+   $line =~ s/\:/\n/g;
+	print "$line\n";
 }
 
 sub kitchen($) {
