@@ -4,30 +4,92 @@ use warnings;
 use POSIX;
 use File::Basename;
 use File::stat;
-use Getopt::Long;
-Getopt::Long::Configure qw(gnu_getopt);
 use Encode;
 use POSIX;
-use File::Slurp;
+
+sub lookup( $ ) {
+	my $input = shift;
+	my @xref;
+
+	if($input =~ "agendas" || $input =~ "243-6327") {
+		@xref = ( "agendas", "243-6327" );
+	}
+	elsif($input =~ "calorie" || $input =~ "225-6743") {
+		@xref = ( "calorie", "225-6743" );
+	}
+	elsif($input =~ "cuisine" || $input =~ "284-7463") {
+		@xref = ( "cuisine", "284-7463" );
+	}
+	elsif($input =~ "finance" || $input =~ "346-2623") {
+		@xref = ( "finance", "346-2623" );
+	}
+	elsif($input =~ "glucose" || $input =~ "458-2673") {
+		@xref = ( "glucose", "458-2673" );
+	}
+	elsif($input =~ "grocery" || $input =~ "476-4379") {
+		@xref = ( "grocery", "476-4379" );
+	}
+	elsif($input =~ "listing" || $input =~ "547-8464") {
+		@xref = ( "listing", "547-8464" );
+	}
+	elsif($input =~ "kitchen" || $input =~ "548-2436") {
+		@xref = ( "kitchen", "548-2436" );
+	}
+	elsif($input =~ "journal" || $input =~ "568-7625") {
+		@xref = ( "journal", "568-7625" );
+	}
+	elsif($input =~ "remarks" || $input =~ "736-2757") {
+		@xref = ( "remarks", "736-2757" );
+	}
+	else {
+		@xref = ( "listing", "547-8464" );
+	}
+
+	return @xref;
+}
+
+my $input;
+
+if (not defined $ARGV[0]) {
+	$input = "listing";
+}
+else {
+	$input = lc $ARGV[0];
+}
+
+# set the input keyword
+my ($mnemonic, $number) = lookup( $input );
+
+# open the phonebook
+open my $fh, "<", ".phonebook"
+    || die "couldn't open .phonebook: $!\n";
+
+while(my $line = <$fh>) {
+	if( $line =~ /^$number / || $line =~ /^$mnemonic / ) {
+		$line =~ s/^[A-Za-z0-9\-]* *//g;
+		print $line;
+	}
+}
+
+close $fh;
+
+=cut
 
 # what are the global variables?
 our $designator  = "none"; 
-our $agendaflag  = 0;
+#our $matchingTag = "none";      
 our $phonebook   = ".phonebook";
 our $todofile    = "none";
 our $todofp;
 our $verboseFlag = 0;
 our $helpFlag    = 0;
-our @upperlist;
-our @lowerlist;
-our $cdow   = strftime( "%a", localtime());
-our $cmoy   = strftime( "%b", localtime());
-our $cday   = strftime( "%d", localtime());
+our $cdow = strftime( "%a", localtime());
+our $cmoy = strftime( "%b", localtime());
+our $cday = strftime( "%d", localtime());
 our $cmonth = strftime( "%m", localtime());
-our $cyear  = strftime( "%Y", localtime());
-our $ndow   = strftime( "%u", localtime());
-our $epoch  = strftime( "%s", localtime());
-#our $matchingTag = "none";      
+our $cyear = strftime( "%Y", localtime());
+our $ndow = strftime( "%u", localtime());
+our $epoch = strftime( "%s", localtime());
 
 # subs - listed above main code to squelch prototype complaints
 
@@ -46,40 +108,24 @@ sub dateLine( $ )
    my $day=0;
    my $month=0;
 	my $dow = "blank";
+	my $printflag = 0;
 	my $nth = 0;
 	my $moy = "blank";
-	my $hastime = 0;
 
 	# retrieve the line
 	my $line = shift;
 
 	# break the line into parts
-	$line =~ /^(.*)\t(.*\n)/;
+	$line =~ /^(.*)\t(.*)\n/;
 	my $date = $1;
 	my $item = $2;
-
-	# does this item have a valid time?
-	if( $item =~ /^([0-2][0-9])\:([0-5][0-9]) / ) {
-		my $hour = $1;
-		my $minute = $2;
-		if( $hour >= 0 && $hour <=24 && $minute >=0 && $minute <= 59 ) {
-			$hastime = 1;
-		}
-	}
 
 	# recognize the date, if possible
 	#
 	
 	# is it "daily"?
 	if( $date =~ /daily/ ) {
-
-		# push it on the appropriate list
-		if( $hastime == 1 ) {
-			push @upperlist, $item;
-		}
-		else {
-			push @lowerlist, $item;
-		}
+		$printflag = 1;
 	}
 	
 	# is it yyyymmdd?
@@ -91,14 +137,7 @@ sub dateLine( $ )
 
 		# parse the wildcards
 		if( $year == 0 && $month == 0 && $day == 0 ) {
-
-			# push it on the appropriate list
-			if( $hastime == 1 ) {
-				push @upperlist, $item;
-			}
-			else {
-				push @lowerlist, $item;
-			}
+			$printflag = 1;
 		}
 
 		# does it match today?
@@ -106,13 +145,7 @@ sub dateLine( $ )
 		  	&& ($month == $cmonth || $month == 0) 
 		  	&& ($year == $cyear || $year == 0)) {
 		
-			# push it on the appropriate list
-			if( $hastime == 1 ) {
-				push @upperlist, $item;
-			}
-			else {
-				push @lowerlist, $item;
-			}
+			$printflag = 1;
 		}
 	}
 
@@ -131,14 +164,7 @@ sub dateLine( $ )
 
 		# does it match?
 		if(uc($dow) =~ uc($cdow)) {
-
-			# push it on the appropriate list
-			if( $hastime == 1 ) {
-				push @upperlist, $item;
-			}
-			else {
-				push @lowerlist, $item;
-			}
+			$printflag = 1;
 		}
 	}
 
@@ -160,14 +186,7 @@ sub dateLine( $ )
 		if(uc($dow) =~ uc($cdow)) {
 			my $rstart = 7*($nth-1);
 			if($cday > $rstart && $cday <= $rstart+7) {
-
-				# push it on the appropriate list
-				if( $hastime == 1 ) {
-					push @upperlist, $item;
-				}
-				else {
-					push @lowerlist, $item;
-				}
+				$printflag = 1;
 			}
 		}
 	}
@@ -192,14 +211,7 @@ sub dateLine( $ )
 			if(uc($moy) =~ uc($cmoy)) {
 				my $rstart = 7*($nth-1);
 				if($cday > $rstart && $cday <= $rstart+7) {
-
-					# push it on the appropriate list
-					if( $hastime == 1 ) {
-						push @upperlist, $item;
-					}
-					else {
-						push @lowerlist, $item;
-					}
+					$printflag = 1;
 				}
 			}
 		}
@@ -210,13 +222,7 @@ sub dateLine( $ )
 		
 		# is this a weekday?
 		if($ndow >= 1 && $ndow <= 5) {
-			# push it on the appropriate list
-			if( $hastime == 1 ) {
-				push @upperlist, $item;
-			}
-			else {
-				push @lowerlist, $item;
-			}
+			$printflag = 1;
 		}
 	}
 
@@ -224,13 +230,7 @@ sub dateLine( $ )
 	if( $date =~ /^weekend/ ) {
 		# is this a weekend?
 		if($ndow >= 6 && $ndow <= 7) {
-			# push it on the appropriate list
-			if( $hastime == 1 ) {
-				push @upperlist, $item;
-			}
-			else {
-				push @lowerlist, $item;
-			}
+			$printflag = 1;
 		}
 	}
 
@@ -245,13 +245,7 @@ sub dateLine( $ )
 		if($ndow >= 6 && $ndow <= 7) {
 			my $rstart = 7*($nth-1);
 			if($cday > $rstart && $cday <= $rstart+7) {
-				# push it on the appropriate list
-				if( $hastime == 1 ) {
-					push @upperlist, $item;
-				}
-				else {
-					push @lowerlist, $item;
-				}
+				$printflag = 1;
 			}
 		}
 	}
@@ -266,6 +260,18 @@ sub dateLine( $ )
 	# is it mmm(...) with no other qualifiers? (0.15)
 	# is it dd with no other qualifiers? (0.15)
 	
+	# should we print this line?
+	if( $printflag == 1 ) {
+		print "$item\n";
+		# print to todo.txt file, if requested
+		#if( $todofile !~ "none" ) {
+			#$line =~ /^(.*)\t(.*)\n/;
+			#my $desig = $1;
+			#my $item = $2;
+			#print $todofp "$item due:$cyear-$cmonth-$cday t:$cyear-$cmonth-$cday #$epoch#\n";
+		#}
+	}
+
 }
 
 # process command line arguments
@@ -299,13 +305,16 @@ sub nameLine( $ )
 		# retrieve the line
 		my $line = shift;
 
-		# process the line
-		$line =~ /^.*\t(.*\n)/;
-		my $content = $1;
+		# for now, just print the line
+		print $line;
 
-		# put the line in the lower list
-		push @lowerlist, $content;
-
+		# print to todo.txt file, if requested
+		#if( $todofile !~ "none" ) {
+			#$line =~ /^(.*)\t(.*)\n/;
+			#my $desig = $1;
+			#my $item = $2;
+			#print $todofp "$item +$desig #$epoch#\n";
+		#}
 	}
 }
 
@@ -318,13 +327,16 @@ sub noteLine( $ )
 		# retrieve the line
 		my $line = shift;
 
-		# process the line
-		$line =~ /^.*\t(.*\n)/;
-		my $content = $1;
+		# for now, just print the line
+		print $line;
 
-		# put the line in the lower list
-		push @lowerlist, $content;
-
+		# print to todo.txt file, if requested
+		#if( $todofile !~ "none" ) {
+			#$line =~ /^(.*)\t(.*)\n/;
+			#my $desig = $1;
+			#my $item = $2;
+			#print $todofp "$item +$desig #$epoch#\n";
+		#}
 	}
 }
 
@@ -337,13 +349,16 @@ sub todoLine( $ )
 		# retrieve the line
 		my $line = shift;
 
-		# process the line
-		$line =~ /^.*\t(.*\n)/;
-		my $content = $1;
+		# for now, just print the line
+		print $line;
 
-		# put the line in the lower list
-		push @lowerlist, $content;
-
+		# print to todo.txt file, if requested
+		#if( $todofile !~ "none" ) {
+			#$line =~ /^(.*)\t(.*)\n/;
+			#my $desig = $1;
+			#my $item = $2;
+			#print $todofp "$item +$desig #$epoch#\n";
+		#}
 	}
 }
 
@@ -393,120 +408,56 @@ if( $helpFlag ) {
 	printUsage();
 }
 
-# memorize the phone book
-open my $fh, "<", $phonebook
-	or die "can't open phonebook $phonebook: $!";
-my @lines = read_file($phonebook);
-close $fh;
+# open the phonebook to append
+#open my $fh, ">>", $phonebook
+	#or die "can't open phonebook $phonebook: $!";
 
-# for every line in the phonebook...
-foreach my $line (@lines) {
-
-	# is this a comment?
-	if( $line !~ /\t/ ) {
-		next;
-	}
-
-	# is this a contact line?
-	if( $line =~ /^name/ ) {
-		nameLine( $line );
-	}
-
-	# is this a note line?
-	elsif( $line =~ /^note/ ) {
-		noteLine( $line );
-	}
-
-	# is this a todo line?
-	elsif( $line =~ /^todo/ ) {
-		todoLine( $line );
-	}
-
-	# okay, either a date or garbage
-	else {
-		dateLine( $line );
-	}
-}
-
-## process and print the lists
-
-my @outputlist;
-
-# walk thru the upper list
-foreach my $line (@upperlist) {
-
-	# arrays reboot on each line
-	my @theatmods;
-	my @theplusmods;
-	my @thepoundmods;
-
-	# - pull out the "@" mods
-	while(1) {
-		$line =~ /(@[^ ]*)/;
-		my $atmod = $1;
-		if(!$atmod) {
-			last;
-		}
-		chomp($atmod);
-		push @theatmods, $atmod;
-		$line =~ s/$atmod//g;
-	}
-
-	if((scalar @theatmods) == 0) {
-		push @theatmods, " ";
-	}
-
-	# - pull out the "+" mods
-	while(1) {
-		$line =~ /\+([^ ]*)/;
-		my $plusmod = $1;
-		if(!$plusmod) {
-			last;
-		}
-		chomp($plusmod);
-		push @theplusmods, "+$plusmod";
-		$line =~ s/\+$plusmod//g;
-	}
-
-	if((scalar @theplusmods) == 0) {
-		push @theplusmods, " ";
-	}
-
-	$line =~ s/\n//g;
-
-	my $rightend = sprintf("%20.20s %20.20s", join(',',@theatmods), join(',',@theplusmods));
-	my $outstring = sprintf("%-35.35s %s\n", $line, $rightend);
-	push @outputlist, $outstring;
-}
-
-	my @sortedlist = sort @outputlist;
-	print @sortedlist;
-
-=cut
+# open the todo.txt file, if requested
+#if( $todofile !~ "none" ) {
 	
-	# shift any modifiers (+,#,@) to the right end of the line
-	my @outputlist;
-	my $outstring;
-		my $line = $_;
-		$line =~ /^([^@#+]*)(.*)$/;
-		my $text = $1;
-		my $mods = $2;
-		$outstring = sprintf("%-40.40s %30s\n", $text, $mods);
-		push @outputlist, $outstring;
-	}
-	
-	# sort and print the upper list
-	my @sortedlist = sort @outputlist;
-	
-	# print the lower list
-	foreach(@lowerlist) {
-		my $line = $_;
-		$line =~ /^([^@#+]*)(.*)$/;
-		my $text = $1;
-		my $mods = $2;
-		$outstring = sprintf("%-40.40s %30s\n", $text, $mods);
-		push @sortedlist, $outstring;
-	}
-	print @sortedlist;
-}
+	# read in the todo.txt file, if it exists
+	#if(open $todofp, "<", $todofile) {
+		#while( my $todoline = <$todofp>) {
+
+			# is there a timestamp?
+			#if($todoline =~ /\#([0-9]*)\#/) {
+				#my $timestamp = $1;
+			#}
+
+			# if no timestamp, this one is a new item
+			#else {
+				#my $outline = $todoline;
+				#my $prefix = "todo";
+				#chomp($outline);
+				#if($outline =~ /\+note/) {
+					#$prefix = "note";
+					#$outline =~ s/\+note//g);
+				#}
+				#elsif($outline =~ /\+name/) {
+					#$prefix = "name";
+				#}
+				#elsif($outline =~ /\+todo/) {
+					#$prefix = "todo";
+				#}
+				#elsif($outline =~ /\+weekday/) {
+					#$prefix = "weekday";
+				#}
+				#elsif($outline =~ /\+weekend/) {
+					#$prefix = "weekend";
+				#}
+				#elsif($outline =~ /\+daily/) {
+					#$prefix = "daily";
+				#}
+				#print $fh "$prefix\t$outline #$epoch#\n";
+			#}
+		#}
+		#close $todofp;
+	#}
+
+	# re-open the todo file for writing
+	#if(!open $todofp, ">", $todofile) {
+		#print "couldn't open todo.txt file!\n";
+		#$todofile = "none";
+	#}
+#}
 

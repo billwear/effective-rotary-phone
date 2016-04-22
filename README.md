@@ -29,9 +29,16 @@ RESIDENTIAL
    </tr>
    <tr>
       <td>1.10</td>
-      <td>IN PROGRESS</td>
+      <td>20160422</td>
       <td>switch to experimental input/file format</td>
       <td>refactor the code a bit</td>
+      <td>---</td>
+   </tr>
+   <tr>
+      <td>1.11</td>
+      <td>IN PROGRESS</td>
+      <td>hook up 243-6327</td>
+      <td></td>
       <td>---</td>
    </tr>
 </table>

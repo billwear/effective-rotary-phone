@@ -1,32 +1,6 @@
-name	clark kent
-	344 clinton street, apt 3-d
-	metropolis, sw 88888
-	(555) 123-4567
-	(but he's never home!)
-todo	make a grocery list
-	and get more tomatoes
-note	oh, boy, what a wednesday!
-name	bruce wayne
-	28 wayne place
-	gotham, se 77777
-	(555) 987-6543
-	note: always in the cellar
-20160414	yyyymmdd
-mon	dayname (monday)
-wednesday	dayname (wed)
-7mon	seventh monday (== last monday)
-3 tue	third tuesday
-3 saturday apr	third saturday in april
-3sat october	third saturday in october
-weekday	go to work
-weekend	sleep late
-2weekend	sleep later
-3 weekend	sleep even later
-thu	thursday thing
-2thu	second thursday
-2 thu apr	second thursday in april
-00000418	an annual event on april 18th
-00000419	an annual event on april 19th
-00000018	a monthly event on the 18th of every month
-00000019	a monthly event on the 19th of every month
-00000000	a daily event in the long (zeroes) form
+glucose 4/22/16 10:00 AM 212
+glucose 4/22/16 5:15 AM 181
+calorie 4/22/16 6:30 AM mcd hashbrown +c147 +n307 +r15
+calorie 4/22/16 6:30 AM mcd sausage biscuit +c440 +n1024 +r32
+calorie 4/22/16 5:45 AM silk unsweet vanilla +c15 +n80 +r1
+listing bill wear, (228) 363-3263
