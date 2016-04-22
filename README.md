@@ -9,22 +9,24 @@ SPECIAL
 RESIDENTIAL
   Agendas.............243-6327
      Appointments/Reminders
-  Remarks.............736-2757
-     Random Notes
-  Listing.............547-8464
-     Names & Phone Numbers
-  Grocery.............476-4379
-     Grocery List Items
-  Cuisine.............284-7463
-     Healthy Menus & Charts
-  Kitchen.............548-2436
-     Pantry Inventory
   Calorie.............225-6743
      Food, Exercise, Meds
+  Cuisine.............284-7463
+     Healthy Menus & Charts
   Finance.............346-2623
      Budgets & Expenses
+  Glucose.............458-2673
+     Blood Sugar Logs
+  Grocery.............476-4379
+     Grocery List Items
+  Listing.............547-8464
+     Names & Phone Numbers
+  Kitchen.............548-2436
+     Pantry Inventory
   Journal.............568-7625
      Dated Memo Items
+  Remarks.............736-2757
+     Random Notes
 </pre>
 
 **version history**
