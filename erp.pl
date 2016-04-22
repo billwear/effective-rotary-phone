@@ -5,103 +5,16 @@ use POSIX;
 use File::Basename;
 use File::stat;
 use Encode;
-use POSIX;
 
-sub lookup( $ ) {
-	my $input = shift;
-	my @xref;
+sub agendas($) {
 
-	if($input =~ "agendas" || $input =~ "243-6327") {
-		@xref = ( "agendas", "243-6327" );
-	}
-	elsif($input =~ "calorie" || $input =~ "225-6743") {
-		@xref = ( "calorie", "225-6743" );
-	}
-	elsif($input =~ "cuisine" || $input =~ "284-7463") {
-		@xref = ( "cuisine", "284-7463" );
-	}
-	elsif($input =~ "finance" || $input =~ "346-2623") {
-		@xref = ( "finance", "346-2623" );
-	}
-	elsif($input =~ "glucose" || $input =~ "458-2673") {
-		@xref = ( "glucose", "458-2673" );
-	}
-	elsif($input =~ "grocery" || $input =~ "476-4379") {
-		@xref = ( "grocery", "476-4379" );
-	}
-	elsif($input =~ "listing" || $input =~ "547-8464") {
-		@xref = ( "listing", "547-8464" );
-	}
-	elsif($input =~ "kitchen" || $input =~ "548-2436") {
-		@xref = ( "kitchen", "548-2436" );
-	}
-	elsif($input =~ "journal" || $input =~ "568-7625") {
-		@xref = ( "journal", "568-7625" );
-	}
-	elsif($input =~ "remarks" || $input =~ "736-2757") {
-		@xref = ( "remarks", "736-2757" );
-	}
-	else {
-		@xref = ( "listing", "547-8464" );
-	}
-
-	return @xref;
-}
-
-my $input;
-
-if (not defined $ARGV[0]) {
-	$input = "listing";
-}
-else {
-	$input = lc $ARGV[0];
-}
-
-# set the input keyword
-my ($mnemonic, $number) = lookup( $input );
-
-# open the phonebook
-open my $fh, "<", ".phonebook"
-    || die "couldn't open .phonebook: $!\n";
-
-while(my $line = <$fh>) {
-	if( $line =~ /^$number / || $line =~ /^$mnemonic / ) {
-		$line =~ s/^[A-Za-z0-9\-]* *//g;
-		print $line;
-	}
-}
-
-close $fh;
-
-=cut
-
-# what are the global variables?
-our $designator  = "none"; 
-#our $matchingTag = "none";      
-our $phonebook   = ".phonebook";
-our $todofile    = "none";
-our $todofp;
-our $verboseFlag = 0;
-our $helpFlag    = 0;
-our $cdow = strftime( "%a", localtime());
-our $cmoy = strftime( "%b", localtime());
-our $cday = strftime( "%d", localtime());
-our $cmonth = strftime( "%m", localtime());
-our $cyear = strftime( "%Y", localtime());
-our $ndow = strftime( "%u", localtime());
-our $epoch = strftime( "%s", localtime());
-
-# subs - listed above main code to squelch prototype complaints
-
-# process a line that isn't name, note, or todo item
-sub dateLine( $ )
-{
-	# don't process if another designator is selected
-	if( $designator =~ /note/ 
-		|| $designator =~ /name/
-		|| $designator =~ /todo/ ) {
-		return;
-	}
+	my $cdow = strftime( "%a", localtime());
+	my $cmoy = strftime( "%b", localtime());
+	my $cday = strftime( "%d", localtime());
+	my $cmonth = strftime( "%m", localtime());
+	my $cyear = strftime( "%Y", localtime());
+	my $ndow = strftime( "%u", localtime());
+	my $epoch = strftime( "%s", localtime());
 
 	# needed global variables
 	my $year=0;
@@ -116,7 +29,7 @@ sub dateLine( $ )
 	my $line = shift;
 
 	# break the line into parts
-	$line =~ /^(.*)\t(.*)\n/;
+	$line =~ /^[^ ]* *([^ ]*) (.*)\n/;
 	my $date = $1;
 	my $item = $2;
 
@@ -125,6 +38,11 @@ sub dateLine( $ )
 	
 	# is it "daily"?
 	if( $date =~ /daily/ ) {
+		$printflag = 1;
+	}
+
+	# is it a to-do item?
+	if( $date =~ /todo/ ) {
 		$printflag = 1;
 	}
 	
@@ -259,205 +177,128 @@ sub dateLine( $ )
 	# is it mmm(...) nn? (0.15)
 	# is it mmm(...) with no other qualifiers? (0.15)
 	# is it dd with no other qualifiers? (0.15)
-	
-	# should we print this line?
+
 	if( $printflag == 1 ) {
 		print "$item\n";
-		# print to todo.txt file, if requested
-		#if( $todofile !~ "none" ) {
-			#$line =~ /^(.*)\t(.*)\n/;
-			#my $desig = $1;
-			#my $item = $2;
-			#print $todofp "$item due:$cyear-$cmonth-$cday t:$cyear-$cmonth-$cday #$epoch#\n";
-		#}
+	}	
+}
+
+sub calorie($) {
+	my $line = shift;
+	$line =~ s/^[A-Za-z0-9\-]* *//g;
+	print $line;
+}
+
+sub cuisine($) {
+	my $line = shift;
+	$line =~ s/^[A-Za-z0-9\-]* *//g;
+	print $line;
+}
+
+sub finance($) {
+	my $line = shift;
+	$line =~ s/^[A-Za-z0-9\-]* *//g;
+	print $line;
+}
+
+sub glucose($) {
+	my $line = shift;
+	$line =~ s/^[A-Za-z0-9\-]* *//g;
+	print $line;
+}
+
+sub grocery($) {
+	my $line = shift;
+	$line =~ s/^[A-Za-z0-9\-]* *//g;
+	print $line;
+}
+
+sub listing($) {
+	my $line = shift;
+	$line =~ s/^[A-Za-z0-9\-]* *//g;
+	print $line;
+}
+
+sub kitchen($) {
+	my $line = shift;
+	$line =~ s/^[A-Za-z0-9\-]* *//g;
+	print $line;
+}
+
+sub journal($) {
+	my $line = shift;
+	$line =~ s/^[A-Za-z0-9\-]* *//g;
+	print $line;
+}
+
+sub remarks($) {
+	my $line = shift;
+	$line =~ s/^[A-Za-z0-9\-]* *//g;
+	print $line;
+}
+
+sub lookup( $ ) {
+	my $input = shift;
+	my @xref;
+
+	if($input =~ "agendas" || $input =~ "6327") {
+		@xref = ( "agendas", "6327", \&agendas );
+	}
+	elsif($input =~ "calorie" || $input =~ "6743") {
+		@xref = ( "calorie", "6743", \&calorie );
+	}
+	elsif($input =~ "cuisine" || $input =~ "7463") {
+		@xref = ( "cuisine", "7463", \&cuisine );
+	}
+	elsif($input =~ "finance" || $input =~ "2623") {
+		@xref = ( "finance", "2623", \&finance );
+	}
+	elsif($input =~ "glucose" || $input =~ "2673") {
+		@xref = ( "glucose", "2673", \&glucose );
+	}
+	elsif($input =~ "grocery" || $input =~ "4379") {
+		@xref = ( "grocery", "4379", \&grocery );
+	}
+	elsif($input =~ "listing" || $input =~ "8464") {
+		@xref = ( "listing", "8464", \&listing );
+	}
+	elsif($input =~ "kitchen" || $input =~ "2436") {
+		@xref = ( "kitchen", "2436", \&kitchen );
+	}
+	elsif($input =~ "journal" || $input =~ "7625") {
+		@xref = ( "journal", "7625", \&journal );
+	}
+	elsif($input =~ "remarks" || $input =~ "2757") {
+		@xref = ( "remarks", "2757", \&remarks );
+	}
+	else {
+		@xref = ( "listing", "8464", \&listing );
 	}
 
+	return @xref;
 }
 
-# process command line arguments
-sub doCmdLineArgs()
-{
-	GetOptions(
-		'd=s' => \$designator,  # one date or a range of dates
-#		's=s' => \$matchingTag, # filter lines by a string
-		'f=s' => \$phonebook,   # instead of ~/.phonebook
-		#'t=s' => \$todofile,    # where to write todo.txt output
-		'v'   => \$verboseFlag, # verbose mode
-		'h'   => \$helpFlag     # print usage and quit
-	) or printUsage();
+my $input;
 
-	if($verboseFlag) {
-		print "target dates = $designator\n";
-#		print "regex        = $matchingTag\n";
-		print "phonebook    = $phonebook\n";
-		#print "todofile     = $todofile\n";
-		print "verbose      = $verboseFlag\n";
-		print "help         = $helpFlag\n";
+if (not defined $ARGV[0]) {
+	$input = "listing";
+}
+else {
+	$input = lc $ARGV[0];
+}
+
+# set the input keyword
+my ($mnemonic, $number, $coderef) = lookup( $input );
+
+# open the phonebook
+open my $fh, "<", ".phonebook"
+    || die "couldn't open .phonebook: $!\n";
+
+while(my $line = <$fh>) {
+	if( $line =~ /^$number / || $line =~ /^$mnemonic / ) {
+		&$coderef($line);
 	}
 }
 
-# process a contact line
-sub nameLine( $ )
-{
-	# is this my line?
-	if( $designator =~ /name/ ) {
-	
-		# retrieve the line
-		my $line = shift;
-
-		# for now, just print the line
-		print $line;
-
-		# print to todo.txt file, if requested
-		#if( $todofile !~ "none" ) {
-			#$line =~ /^(.*)\t(.*)\n/;
-			#my $desig = $1;
-			#my $item = $2;
-			#print $todofp "$item +$desig #$epoch#\n";
-		#}
-	}
-}
-
-# process a note line
-sub noteLine( $ )
-{
-	# is this my line?
-	if( $designator =~ /note/ ) {
-
-		# retrieve the line
-		my $line = shift;
-
-		# for now, just print the line
-		print $line;
-
-		# print to todo.txt file, if requested
-		#if( $todofile !~ "none" ) {
-			#$line =~ /^(.*)\t(.*)\n/;
-			#my $desig = $1;
-			#my $item = $2;
-			#print $todofp "$item +$desig #$epoch#\n";
-		#}
-	}
-}
-
-# process a todo line
-sub todoLine( $ )
-{
-	# is this my line?
-	if( $designator =~ /todo/ ) {
-
-		# retrieve the line
-		my $line = shift;
-
-		# for now, just print the line
-		print $line;
-
-		# print to todo.txt file, if requested
-		#if( $todofile !~ "none" ) {
-			#$line =~ /^(.*)\t(.*)\n/;
-			#my $desig = $1;
-			#my $item = $2;
-			#print $todofp "$item +$desig #$epoch#\n";
-		#}
-	}
-}
-
-# print the usage message
-sub printUsage( )
-{
-	# file pointer
-	my $fp;
-
-	# attempt to open the readme file
-	if(!open $fp, "<", "/usr/share/erp/README.md") {
-		shortUsage();
-	}
-
-	my $pflag = 0;
-
-	# read & print all lines between <pre> and </pre>
-	while(my $line = <$fp>) {
-		if($line =~ /^<pre>/) {
-			$pflag = 1;
-			next;
-		}
-		if($line =~ /^<\/pre>/) {
-			$pflag = 0;
-			next;
-		}
-		if($pflag == 1) {
-			print "$line";
-		}
-	}
-	exit;
-}
-
-# backup usage message if README.md can't be found
-sub shortUsage( )
-{
-	print "erp -d designator -f phonebook -v -h\n";
-	exit;
-}
-
-### main thread
-
-# are there command line args?
-doCmdLineArgs( );
-
-if( $helpFlag ) {
-	printUsage();
-}
-
-# open the phonebook to append
-#open my $fh, ">>", $phonebook
-	#or die "can't open phonebook $phonebook: $!";
-
-# open the todo.txt file, if requested
-#if( $todofile !~ "none" ) {
-	
-	# read in the todo.txt file, if it exists
-	#if(open $todofp, "<", $todofile) {
-		#while( my $todoline = <$todofp>) {
-
-			# is there a timestamp?
-			#if($todoline =~ /\#([0-9]*)\#/) {
-				#my $timestamp = $1;
-			#}
-
-			# if no timestamp, this one is a new item
-			#else {
-				#my $outline = $todoline;
-				#my $prefix = "todo";
-				#chomp($outline);
-				#if($outline =~ /\+note/) {
-					#$prefix = "note";
-					#$outline =~ s/\+note//g);
-				#}
-				#elsif($outline =~ /\+name/) {
-					#$prefix = "name";
-				#}
-				#elsif($outline =~ /\+todo/) {
-					#$prefix = "todo";
-				#}
-				#elsif($outline =~ /\+weekday/) {
-					#$prefix = "weekday";
-				#}
-				#elsif($outline =~ /\+weekend/) {
-					#$prefix = "weekend";
-				#}
-				#elsif($outline =~ /\+daily/) {
-					#$prefix = "daily";
-				#}
-				#print $fh "$prefix\t$outline #$epoch#\n";
-			#}
-		#}
-		#close $todofp;
-	#}
-
-	# re-open the todo file for writing
-	#if(!open $todofp, ">", $todofile) {
-		#print "couldn't open todo.txt file!\n";
-		#$todofile = "none";
-	#}
-#}
+close $fh;
 
