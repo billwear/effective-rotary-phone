@@ -1,8 +1,7 @@
 # erp
 <pre>
-123456789012345678901234567890
-erp [number].............below
-     effective rotary phone
+erp [number].........See Below
+     Effective Rotary Phone
      (can spell out number)
 SPECIAL
   Information..............411
