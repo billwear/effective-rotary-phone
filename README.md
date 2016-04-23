@@ -5,7 +5,6 @@ erp [number].........See Below
      (can also enter name)
 SPECIAL
   Information..............411
-  Operator...................0
 RESIDENTIAL
   Agendas.................6327
   Calorie.................6743
@@ -45,5 +44,12 @@ RESIDENTIAL
       <td>hook up 8464, 6743</td>
       <td>---</td>
    </tr>
+      <tr>
+      <td>1.13</td>
+      <td>20160422</td>
+      <td>everything hooked up but 7625 and 2757<br>.phonebook loaded with format comments</td>
+      <td>---</td>
+   </tr>
+
 </table>
 
