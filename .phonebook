@@ -1,8 +1,11 @@
-glucose 4/22/16 10:00 AM 212
-glucose 4/22/16 5:15 AM 181
-calorie 4/22/16 6:30 AM mcd hashbrown +c147 +n307 +r15
-calorie 4/22/16 6:30 AM mcd sausage biscuit +c440 +n1024 +r32
-calorie 4/22/16 5:45 AM silk unsweet vanilla +c15 +n80 +r1
-listing bill wear, (228) 363-3263
-agendas friday do something today
-agendas todo something to do
+#glucose date:time:reading
+#cuisine food:serving:glycemic load:glycemic index:carbs:calories
+#grocery item:quantity needed
+#kitchen food:portion:glycemic load:carbs:calories:perishability:sodium
+#calorie food:portion:glycemic:carbs:calories:perishability:sodium
+#journal date:time:entry
+#remarks date:time:note
+#finance date:description:category:amount
+#listing name:next line:next line
+#agendas date item:value:context
+
