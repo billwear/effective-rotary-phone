@@ -6,6 +6,7 @@ erp [number].........See Below
 SPECIAL
   Information..............411
 RESIDENTIAL
+  Actions.................4667
   Agendas.................6327
   Calorie.................6743
   Cuisine.................7463
@@ -14,7 +15,6 @@ RESIDENTIAL
   Grocery.................4379
   Listing.................8464
   Kitchen.................2436
-  Journal.................7625
   Remarks.................2757
 </pre>
 
@@ -50,6 +50,12 @@ RESIDENTIAL
       <td>everything hooked up but 7625 and 2757<br>.phonebook loaded with format comments</td>
       <td>---</td>
    </tr>
-
+   <tr>
+     <td>1.14</td>
+     <td>20160424</td>
+     <td>stable version with output sorting, added actions (sorts by value), agendas now sorts by agenda item,
+          allowing timed agendas</td>
+     <td>---</td>
+   </tr>
 </table>
 
