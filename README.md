@@ -1,6 +1,6 @@
 # erp
 <b>NAME</b><br>
-      erp 2.0 - flexible plain-text calendar
+<span style="margin-left:10px;">erp 2.0 - flexible plain-text calendar</span>
 
 **version history**
 <table>
