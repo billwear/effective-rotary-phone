@@ -1,8 +1,13 @@
 # erp
 <pre>
-NAME
-        erp 2.0 - flexible plain-text calendar
+<b>NAME</b>
+       erp 2.0 - flexible plain-text calendar
 
+SYNOPSIS
+       erp [options]
+
+DESCRIPTION
+       erp is a flexible command-line calendar utility. It displays
 </pre>
 
 **version history**
