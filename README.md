@@ -1,6 +1,9 @@
 # erp
-<b>NAME</b><br>
-&nbsp;&nbsp;&nbsp;erp 2.0 - flexible plain-text calendar
+<pre>
+NAME
+        erp 2.0 - flexible plain-text calendar
+
+</pre>
 
 **version history**
 <table>
