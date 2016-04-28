@@ -1,22 +1,6 @@
 # erp
-<pre>
-erp [number].........See Below
-     Effective Rotary Phone
-     (can also enter name)
-SPECIAL
-  Information..............411
-RESIDENTIAL
-  Actions.................4667
-  Agendas.................6327
-  Calorie.................6743
-  Cuisine.................7463
-  Finance.................2623
-  Glucose.................2673
-  Grocery.................4379
-  Listing.................8464
-  Kitchen.................2436
-  Remarks.................2757
-</pre>
+<b>NAME</b>
+::erp 2.0 - flexible plain-text calendar
 
 **version history**
 <table>
