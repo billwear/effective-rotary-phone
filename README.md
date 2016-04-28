@@ -7,9 +7,14 @@
        <b>erp</b> [options]
 
 <b>DESCRIPTION</b>
-       <b>erp</b> is a flexible command-line lookup utility. It displays events,
-       note, grocery lists, and other information drawn from a plain-text file
+       <b>erp</b> is a flexible command-line lookup utility. It displays events, 
+       notes, grocery lists, and other information drawn from a plain-text file 
        called <b>.phonebook</b> in the user's home directory.
+
+<b>OPTIONS</b>
+       The following options are accepted by <b>erp</b>:
+
+       <b>-d</b> <u>date</u>
 </pre>
 
 **version history**
