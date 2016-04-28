@@ -1,13 +1,15 @@
 # erp
 <pre>
 <b>NAME</b>
-       erp 2.0 - flexible plain-text calendar
+       erp 2.0 - flexible plain-text lookup tool
 
-SYNOPSIS
-       erp [options]
+<b>SYNOPSIS</b>
+       <b>erp</b> [options]
 
-DESCRIPTION
-       erp is a flexible command-line calendar utility. It displays
+<b>DESCRIPTION</b>
+       <b>erp</b> is a flexible command-line lookup utility. It displays events,
+       note, grocery lists, and other information drawn from a plain-text file
+       called <b>.phonebook</b> in the user's home directory.
 </pre>
 
 **version history**
